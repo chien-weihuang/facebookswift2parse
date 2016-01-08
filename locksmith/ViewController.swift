@@ -13,13 +13,16 @@ class ViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        //login Situations
         if (PFUser.currentUser() == nil) {
+           
             let loginViewController = PFLogInViewController()
             loginViewController.delegate = self
             
-            loginViewController.fields =  [.UsernameAndPassword , .LogInButton , .PasswordForgotten , .SignUpButton , .Facebook  ]
+            loginViewController.fields =  [.UsernameAndPassword ]
             loginViewController.emailAsUsername = true
             loginViewController.signUpController?.delegate = self
+            
             self.presentViewController(loginViewController, animated: false, completion: nil)
         }
         else
@@ -29,17 +32,23 @@ class ViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpV
         }
     }
     
+    
+    //login proof
+    
     func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
         self.dismissViewControllerAnimated(true, completion: nil)
         presentLoggedInAlert()
     }
     
-    
+    //sign up proof
     func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
         self.dismissViewControllerAnimated(true, completion: nil)
         presentLoggedInAlert()
     }
     
+    
+    
+    // alert style
 func presentLoggedInAlert() {
     let alertController = UIAlertController(title: "You're logged in", message: "Welcome to BSD test", preferredStyle: .Alert)
     let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
@@ -63,3 +72,26 @@ func presentLoggedInAlert() {
 
 }
 
+
+/*
+override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    //login Situations
+    if (PFUser.currentUser() == nil) {
+        
+        let loginViewController = PFLogInViewController()
+        loginViewController.delegate = self
+        
+        loginViewController.fields =  [.UsernameAndPassword , .LogInButton , .PasswordForgotten , .SignUpButton , .Facebook  ]
+        loginViewController.emailAsUsername = true
+        loginViewController.signUpController?.delegate = self
+        
+        self.presentViewController(loginViewController, animated: false, completion: nil)
+    }
+    else
+    {
+        presentLoggedInAlert()
+        
+    }
+}
+*/
